@@ -1,0 +1,114 @@
+#!/bin/bash
+
+WALL_ROOT="$HOME/Wallpapers"
+CACHE_ROOT="$HOME/.cache/wallpapers"
+ACCENT="$(sed -n '3p' ~/.cache/wal/colors 2>/dev/null || echo '#88ccff')"
+
+mkdir -p "$CACHE_ROOT"
+
+# -------------------------
+# Pick category first
+# -------------------------
+CATEGORY=$(ls -d "$WALL_ROOT"/*/ 2>/dev/null | xargs -n1 basename | rofi \
+  -dmenu \
+  -p "Wallpaper Category" \
+  -theme-str "
+    window {
+      width: 40%;
+      border-radius: 16px;
+      background-color: rgba(10,10,10,0.85);
+    }
+    element selected {
+      background-color: ${ACCENT}33;
+    }
+  "
+)
+
+[ -z "$CATEGORY" ] && exit 0
+
+WALL_DIR="$WALL_ROOT/$CATEGORY"
+CACHE_DIR="$CACHE_ROOT/$CATEGORY"
+mkdir -p "$CACHE_DIR"
+
+# -------------------------
+# Generate thumbnails
+# -------------------------
+for img in "$WALL_DIR"/*.{jpg,jpeg,png,webp}; do
+  [ -e "$img" ] || continue
+  name="$(basename "$img")"
+  thumb="$CACHE_DIR/$name"
+
+  if [ ! -f "$thumb" ]; then
+    magick "$img" -resize 520x300^ -gravity center -extent 520x300 "$thumb"
+  fi
+done
+
+# -------------------------
+# Auto-focus middle item
+# -------------------------
+FILES=("$CACHE_DIR"/*)
+COUNT=${#FILES[@]}
+MID=$((COUNT / 2))
+
+# -------------------------
+# Wallpaper picker
+# -------------------------
+SELECTED=$(ls "$CACHE_DIR" | rofi \
+  -dmenu \
+  -show-icons \
+  -icon-theme "$CACHE_DIR" \
+  -selected-row "$MID" \
+  -theme-str "
+    * {
+      accent: ${ACCENT};
+    }
+
+    window {
+      location: center;
+      width: 92%;
+      transparency: real;
+      background-color: rgba(10,10,10,0.88);
+      border-radius: 22px;
+      padding: 20px;
+      animation: fade;
+    }
+
+    listview {
+      layout: horizontal;
+      spacing: 22px;
+      fixed-height: true;
+      scrollbar: true;
+    }
+
+    scrollbar {
+      handle-width: 6px;
+      handle-color: @accent;
+    }
+
+    element {
+      orientation: vertical;
+      padding: 10px;
+      border-radius: 18px;
+    }
+
+    element selected {
+      border: 2px solid @accent;
+      background-color: transparent;
+    }
+
+    element-icon {
+      size: 240px;
+      border-radius: 16px;
+    }
+
+    element-text {
+      horizontal-align: 0.5;
+      margin: 10px 0 0 0;
+      text-color: #dddddd;
+    }
+  "
+)
+
+[ -z "$SELECTED" ] && exit 0
+
+"$HOME/.local/bin/setwall" "$WALL_DIR/$SELECTED"

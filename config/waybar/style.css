@@ -1,0 +1,218 @@
+/* ============================
+   Pywal import (DO NOT REMOVE)
+   ============================ */
+@import url("file:///home/grey/.cache/wal/colors.css");
+
+/* ============================
+   Color mapping (pywal → theme)
+   ============================ */
+
+/* Core surfaces */
+@define-color background      @color0;
+@define-color second-background @color8;
+
+/* Text */
+@define-color text            @foreground;
+
+/* Borders & focus */
+@define-color borders         @color8;
+@define-color focused         @color2;
+@define-color focused2        @color3;
+
+/* Accents */
+@define-color color1          @color4;
+@define-color color2          @color5;
+@define-color color3          @color6;
+
+/* Alerts */
+@define-color urgent          @color1;
+
+/* ============================
+   Fonts
+   ============================ */
+* {
+  font-family: "Iosevka Nerd Font";
+  font-size: 15px;
+}
+
+/* ============================
+   Waybar base
+   ============================ */
+window#waybar {
+  background-color: transparent;
+  border-bottom: 0;
+  color: @text;
+  transition: background-color 0.5s;
+}
+
+window#waybar.hidden {
+  opacity: 0.2;
+}
+
+window#waybar.empty #window {
+  background-color: transparent;
+}
+
+/* ============================
+   Module containers
+   ============================ */
+.modules-left,
+.modules-center,
+.modules-right {
+  margin-top: 10px;
+  background-color: @background;
+  border: 2px solid @focused;
+}
+
+.modules-left {
+  margin-left: 10px;
+  padding-left: 7px;
+}
+
+.modules-center {
+  padding: 0 10px;
+}
+
+.modules-right {
+  margin-right: 10px;
+  padding: 0 10px;
+}
+
+/* ============================
+   Buttons
+   ============================ */
+button {
+  border: none;
+}
+
+/* ============================
+   Left island
+   ============================ */
+#custom-arch,
+#custom-powerprofile,
+#custom-themeswitcher {
+  padding: 0 10px 0 5px;
+  border-radius: 8px;
+}
+
+#custom-arch:hover,
+#custom-powerprofile:hover,
+#custom-themeswitcher:hover {
+  color: @color1;
+}
+
+/* ============================
+   Workspaces
+   ============================ */
+#workspaces button {
+  padding: 0 8px;
+  background-color: transparent;
+  color: @text;
+}
+
+#workspaces button:hover {
+  background-color: @second-background;
+}
+
+#workspaces button.active {
+  color: @focused2;
+  background-color: @second-background;
+}
+
+#workspaces button.urgent {
+  background-color: @urgent;
+}
+
+/* ============================
+   Media
+   ============================ */
+#mpris {
+  margin-left: 5px;
+  padding: 0 9px;
+  background-color: @background;
+  color: @text;
+}
+
+#mpris.playing {
+  background-color: @color3;
+  color: @background;
+  border-radius: 2px;
+}
+
+/* ============================
+   Center
+   ============================ */
+#window {
+  padding: 0 5px;
+}
+
+/* ============================
+   Right island
+   ============================ */
+#clock,
+#battery,
+#cpu,
+#memory,
+#custom-clipboard,
+#custom-bluetooth,
+#network {
+  padding: 0 10px;
+}
+
+#clock:hover,
+#battery:hover,
+#cpu:hover,
+#custom-clipboard:hover,
+#custom-bluetooth:hover,
+#network:hover,
+#idle_inhibitor:hover,
+#custom-swaync:hover,
+#backlight:hover,
+#wireplumber:hover {
+  color: @color1;
+}
+
+#idle_inhibitor {
+  padding-right: 10px;
+}
+
+#custom-powerprofile {
+  padding: 0 8px 0 4px;
+}
+
+#backlight,
+#wireplumber {
+  padding: 0 5px;
+}
+
+#wireplumber.muted {
+  background-color: @color2;
+}
+
+#custom-swaync {
+  padding: 0 10px 0 5px;
+  font-size: 16px;
+  color: @text;
+}
+
+/* ============================
+   Battery states
+   ============================ */
+#battery.charging,
+#battery.plugged {
+  background-color: @focused2;
+  color: @background;
+}
+
+#battery.critical:not(.charging) {
+  background-color: @urgent;
+  color: @text;
+  animation: blink 0.5s steps(12) infinite alternate;
+}
+
+@keyframes blink {
+  to {
+    background-color: @second-background;
+    color: @text;
+  }
+}

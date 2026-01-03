@@ -1,0 +1,5 @@
+
+Extra-commands-to-run
+
+systemctl enable --now power-profiles-daemon
+powerprofilesctl set balanced

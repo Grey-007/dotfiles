@@ -1,0 +1,137 @@
+"$schema" = 'https://starship.rs/config-schema.json'
+
+format = """
+[](fg:${color5})\
+$os\
+$username\
+[](bg:${color1} fg:${color5})\
+$directory\
+[](fg:${color1} bg:${color3})\
+$git_branch\
+$git_status\
+[](fg:${color3} bg:${color4})\
+$c\
+$elixir\
+$elm\
+$golang\
+$gradle\
+$haskell\
+$java\
+$julia\
+$nodejs\
+$nim\
+$rust\
+$scala\
+[](fg:${color4} bg:${color6})\
+$docker_context\
+[](fg:${color6} bg:${color8})\
+$time\
+[ ](fg:${color8})\
+"""
+
+[username]
+show_always = true
+style_user = "bg:${color5}"
+style_root = "bg:${color5}"
+format = '[$user ]($style)'
+disabled = false
+
+[os]
+style = "bg:${color5}"
+disabled = true
+
+[directory]
+style = "bg:${color1}"
+format = "[ $path ]($style)"
+truncation_length = 3
+truncation_symbol = "…/"
+
+[directory.substitutions]
+"Documents" = "󰈙 "
+"Downloads" = " "
+"Music" = " "
+"Pictures" = " "
+
+[c]
+symbol = " "
+style = "bg:${color4}"
+format = '[ $symbol ($version) ]($style)'
+
+[cpp]
+symbol = " "
+style = "bg:${color4}"
+format = '[ $symbol ($version) ]($style)'
+
+[docker_context]
+symbol = " "
+style = "bg:${color6}"
+format = '[ $symbol $context ]($style)'
+
+[elixir]
+symbol = " "
+style = "bg:${color4}"
+format = '[ $symbol ($version) ]($style)'
+
+[elm]
+symbol = " "
+style = "bg:${color4}"
+format = '[ $symbol ($version) ]($style)'
+
+[git_branch]
+symbol = ""
+style = "bg:${color3}"
+format = '[ $symbol $branch ]($style)'
+
+[git_status]
+style = "bg:${color3}"
+format = '[$all_status$ahead_behind ]($style)'
+
+[golang]
+symbol = " "
+style = "bg:${color4}"
+format = '[ $symbol ($version) ]($style)'
+
+[gradle]
+style = "bg:${color4}"
+format = '[ $symbol ($version) ]($style)'
+
+[haskell]
+symbol = " "
+style = "bg:${color4}"
+format = '[ $symbol ($version) ]($style)'
+
+[java]
+symbol = " "
+style = "bg:${color4}"
+format = '[ $symbol ($version) ]($style)'
+
+[julia]
+symbol = " "
+style = "bg:${color4}"
+format = '[ $symbol ($version) ]($style)'
+
+[nodejs]
+symbol = ""
+style = "bg:${color4}"
+format = '[ $symbol ($version) ]($style)'
+
+[nim]
+symbol = "󰆥 "
+style = "bg:${color4}"
+format = '[ $symbol ($version) ]($style)'
+
+[rust]
+symbol = ""
+style = "bg:${color4}"
+format = '[ $symbol ($version) ]($style)'
+
+[scala]
+symbol = " "
+style = "bg:${color4}"
+format = '[ $symbol ($version) ]($style)'
+
+[time]
+disabled = false
+time_format = "%R"
+style = "bg:${color8}"
+format = '[ ♥ $time ]($style)'

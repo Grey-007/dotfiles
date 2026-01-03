@@ -1,0 +1,60 @@
+[global]
+monitor = 0
+follow = mouse
+width = 320
+height = 300
+origin = top-right
+offset = 20x20
+scale = 0
+notification_limit = 5
+
+progress_bar = true
+progress_bar_height = 6
+progress_bar_frame_width = 0
+
+padding = 12
+horizontal_padding = 12
+frame_width = 2
+separator_height = 6
+
+corner_radius = 14
+
+font = monospace 10
+line_height = 0
+
+markup = full
+format = "<b>%s</b>\n%b"
+alignment = left
+
+icon_position = left
+max_icon_size = 48
+icon_corner_radius = 10
+
+mouse_left_click = close_current
+mouse_middle_click = do_action
+mouse_right_click = close_all
+
+timeout = 6
+
+# ----------------------
+# Pywal colors
+# ----------------------
+# These will be replaced dynamically by pywal
+
+[urgency_low]
+background = "#000000"
+foreground = "#ffffff"
+frame_color = "#444444"
+timeout = 4
+
+[urgency_normal]
+background = "#000000"
+foreground = "#ffffff"
+frame_color = "#888888"
+timeout = 6
+
+[urgency_critical]
+background = "#000000"
+foreground = "#ffffff"
+frame_color = "#ff5555"
+timeout = 0

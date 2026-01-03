@@ -1,0 +1,36 @@
+#!/bin/bash
+
+set -e
+
+BACKUP_ROOT="$HOME/RiceBackups"
+DATE="$(date +%Y-%m-%d_%H-%M-%S)"
+DEST="$BACKUP_ROOT/rice_$DATE"
+
+echo "==> Creating backup at $DEST"
+
+mkdir -p "$DEST"
+
+copy() {
+  SRC="$1"
+  [ -e "$SRC" ] && cp -r "$SRC" "$DEST/"
+}
+
+# Core configs
+copy "$HOME/.config/hypr"
+copy "$HOME/.config/waybar"
+copy "$HOME/.config/rofi"
+copy "$HOME/.config/dunst"
+copy "$HOME/.config/kitty"
+copy "$HOME/.config/starship"
+copy "$HOME/.config/wal"
+
+# Scripts & shell
+copy "$HOME/.local/bin"
+copy "$HOME/.zshrc"
+
+# Cleanup junk
+find "$DEST" -type d -name "__pycache__" -exec rm -rf {} +
+find "$DEST" -type d -name "node_modules" -exec rm -rf {} +
+
+echo "==> Backup complete"
+echo "Location: $DEST"

@@ -1,0 +1,28 @@
+#!/bin/sh
+
+IMG="$1"
+[ -f "$IMG" ] || exit 1
+
+# Save last wallpaper
+echo "$IMG" > "$HOME/.cache/current_wallpaper"
+
+# Animated wallpaper
+swww img "$IMG" \
+  --transition-type grow \
+  --transition-fps 60 \
+  --transition-duration 0.8
+
+# Generate pywal colors (vibrant)
+wal -i "$IMG" -n -s --backend wal
+
+# GTK theme
+wal-gtk -g
+
+# Reload Hyprland colors
+hyprctl reload
+
+# waybar reload
+pkill waybar && waybar &
+
+# Reload kitty colors
+pkill -USR1 kitty 2>/dev/null || true

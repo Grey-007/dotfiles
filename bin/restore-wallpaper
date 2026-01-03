@@ -1,0 +1,7 @@
+#!/bin/sh
+
+WALL="$HOME/.cache/current_wallpaper"
+
+[ -f "$WALL" ] || exit 0
+
+swww img "$(cat "$WALL")" --transition-type none

@@ -1,0 +1,31 @@
+#!/bin/bash
+
+WAYBAR_DIR="$HOME/.config/waybar"
+THEMES_DIR="$WAYBAR_DIR/themes"
+
+# Safety checks
+[ -d "$THEMES_DIR" ] || exit 1
+
+# Pick theme via rofi
+THEME=$(ls "$THEMES_DIR" | rofi -dmenu -p "Waybar Theme")
+
+[ -z "$THEME" ] && exit 0
+
+THEME_PATH="$THEMES_DIR/$THEME"
+
+# Validate theme contents
+if [ ! -f "$THEME_PATH/config" ] || [ ! -f "$THEME_PATH/style.css" ]; then
+  notify-send "Waybar Switcher" "Theme '$THEME' is missing config or style.css"
+  exit 1
+fi
+
+# Remove old links/files
+rm -f "$WAYBAR_DIR/config" "$WAYBAR_DIR/style.css"
+
+# Link new ones
+ln -s "$THEME_PATH/config" "$WAYBAR_DIR/config"
+ln -s "$THEME_PATH/style.css" "$WAYBAR_DIR/style.css"
+
+# Reload Waybar safely
+pkill waybar
+waybar & disown

@@ -1,0 +1,35 @@
+#!/bin/bash
+
+set -e
+
+SRC="$1"
+
+if [ -z "$SRC" ] || [ ! -d "$SRC" ]; then
+  echo "Usage: rice-restore <backup-directory>"
+  exit 1
+fi
+
+echo "==> Restoring rice from $SRC"
+
+restore() {
+  NAME="$(basename "$1")"
+  cp -r "$SRC/$NAME" "$HOME/.config/" 2>/dev/null || true
+}
+
+# Restore configs
+restore hypr
+restore waybar
+restore rofi
+restore dunst
+restore kitty
+restore starship
+restore wal
+
+# Restore scripts
+cp -r "$SRC/bin" "$HOME/.local/" 2>/dev/null || true
+
+# Restore shell config
+[ -f "$SRC/.zshrc" ] && cp "$SRC/.zshrc" "$HOME/"
+
+echo "==> Restore complete"
+echo "Log out and log back in."

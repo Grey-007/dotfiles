@@ -1,0 +1,10 @@
+#!/bin/sh
+
+# Kill existing waybar instances
+pkill waybar 2>/dev/null
+
+# Small delay to avoid race conditions
+sleep 0.2
+
+# Start waybar
+exec waybar
